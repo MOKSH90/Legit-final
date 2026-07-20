@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api/proxy';
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('legit_token') : null;
@@ -14,10 +14,11 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     headers,
   });
 
-  const data = await response.json();
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
 
   if (!response.ok) {
-    const error = new Error(data.message || 'Something went wrong') as Error & { status?: number };
+    const error = new Error(data?.message || 'Something went wrong') as Error & { status?: number };
     error.status = response.status;
     throw error;
   }

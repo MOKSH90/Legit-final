@@ -90,8 +90,18 @@ export default function DashboardPage() {
     setIsLoading(true);
     setFetchError('');
     try {
+      const storedToken = typeof window !== 'undefined' ? localStorage.getItem('legit_token') : null;
       const storedUser = typeof window !== 'undefined' ? localStorage.getItem('legit_user') : null;
       const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+      if (!storedToken || !parsedUser?.role) {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('legit_token');
+          localStorage.removeItem('legit_user');
+        }
+        router.push('/login');
+        return;
+      }
+
       const role = parsedUser?.role || '';
       setUserRole(role);
       setUserLegitId(parsedUser?.legitId || '');
@@ -116,7 +126,7 @@ export default function DashboardPage() {
     } catch (err: unknown) {
       const error = err as Error & { status?: number };
       console.error('Failed to fetch contracts:', error);
-      if (typeof window !== 'undefined' && (error.status === 401 || error.status === 403 || !localStorage.getItem('legit_token'))) {
+      if (typeof window !== 'undefined' && (error.status === 401 || !localStorage.getItem('legit_token'))) {
         localStorage.removeItem('legit_token');
         localStorage.removeItem('legit_user');
         router.push('/login');

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
   process.env.API_URL ||
-  'https://55a2-103-99-14-202.ngrok-free.app';
+  process.env.BACKEND_URL ||
+  'http://localhost:8080';
 
 function buildBackendUrl(path: string[], request: NextRequest) {
-  const target = new URL(`/api/${path.join('/')}`, BACKEND_URL);
+  const backendPath = path[0] === 'api' ? path.join('/') : ['api', ...path].join('/');
+  const target = new URL(`/${backendPath}`, BACKEND_URL);
   request.nextUrl.searchParams.forEach((value, key) => {
     target.searchParams.append(key, value);
   });
