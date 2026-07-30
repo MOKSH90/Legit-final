@@ -10,7 +10,7 @@ ktor:
 # JWT Configuration
 # ========================
 jwt:
-  secret: "legit-super-secret-key-change-this-in-production-minimum-256-bits"
+  secret: $JWT_SECRET:legit-super-secret-key-change-this-in-production-minimum-256-bits
   issuer: "legit-platform"
   audience: "legit-users"
   realm: "legit"
@@ -21,8 +21,8 @@ jwt:
 # MongoDB Configuration
 # ========================
 mongodb:
-  uri: "mongodb://localhost:27017"
-  database: "legit"
+  uri: $MONGODB_URI:mongodb://localhost:27017
+  database: $MONGODB_DATABASE:legit
 
 # ========================
 # Legit Platform Configuration
@@ -30,11 +30,11 @@ mongodb:
 legit:
   # AES-256-GCM encryption key for document vault
   # CHANGE THIS IN PRODUCTION — must be a strong, unique secret
-  encryptionSecret: "legit-document-encryption-secret-change-in-production-64chars-min"
+  encryptionSecret: $LEGIT_ENCRYPTION_SECRET:legit-document-encryption-secret-change-in-production-64chars-min
 
   # Secret used for hashing disposable keys and generating proof hashes
   # CHANGE THIS IN PRODUCTION — must be a strong, unique secret
-  pipelineSecret: "legit-pipeline-verification-secret-change-in-production"
+  pipelineSecret: $LEGIT_PIPELINE_SECRET:legit-pipeline-verification-secret-change-in-production
 
   # Time-to-live for disposable keys in milliseconds (default: 15 minutes)
   disposableKeyTtlMs: "900000"

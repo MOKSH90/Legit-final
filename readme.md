@@ -224,7 +224,35 @@ API_URL=http://localhost:8080
 
 Restart the web dev server after changing `.env.local`.
 
-## Running Everything Locally
+## Containerization (Docker Compose)
+
+You can run the entire stack (MongoDB, Backend, and Website) with a single command from the project root:
+
+```bash
+docker compose up --build
+```
+
+This will:
+1. Build the Ktor backend (using a multi-stage JDK 25 environment).
+2. Build the Next.js website (using a multi-stage Node 20 standalone configuration).
+3. Spin up MongoDB, Backend, and Website, mapping them to the following ports:
+   - **Website**: [http://localhost:3000](http://localhost:3000)
+   - **Backend API**: [http://localhost:8080](http://localhost:8080)
+   - **MongoDB**: `localhost:27017`
+
+To run in the background (detached mode):
+
+```bash
+docker compose up -d
+```
+
+To stop all services:
+
+```bash
+docker compose down
+```
+
+## Running Everything Locally (Without Docker)
 
 From the repository root:
 
