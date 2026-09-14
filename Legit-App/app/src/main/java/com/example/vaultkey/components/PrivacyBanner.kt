@@ -38,12 +38,12 @@ fun PrivacyBanner() {
             @Suppress("DEPRECATION")
             Column {
                 Text(
-                    text = "Contractual Verification",
+                    text = "BNS §72(1) & POCSO §23 Identity Protection",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Black
                 )
                 Text(
-                    text = "Only YES/NO results shared. Your original docs never leave the device.",
+                    text = "Victim & Witness identities are masked by default. All access events are logged to the tamper-evident hash ledger.",
                     style = MaterialTheme.typography.bodySmall,
                     lineHeight = 16.sp
                 )

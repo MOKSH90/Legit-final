@@ -50,7 +50,7 @@ fun VerificationScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Verification",
+                        "Dual-Approval Unmask",
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -227,13 +227,13 @@ private fun VerificationHeader(count: Int) {
         ) {
             Column {
                 Text(
-                    text = "Verification contracts",
+                    text = "Dual-Approval Authorization",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = "Approve or reject requests from service providers",
+                    text = "Authorize identity unmasking for BNS §72(1) & POCSO protected cases",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                 )
@@ -299,13 +299,13 @@ private fun EmptyVerificationState() {
         }
         Spacer(Modifier.height(20.dp))
         Text(
-            "No pending verification requests",
+            "No pending unmask authorization requests",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            "When a service provider sends you a new contract, it will appear here.",
+            "When an Investigating Officer requests identity unmasking for a protected case, it will appear here for dual approval.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

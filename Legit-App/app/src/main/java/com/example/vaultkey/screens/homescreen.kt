@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.vaultkey.data.AppController
+import com.example.vaultkey.components.ChainIntegrityCard
 import com.example.vaultkey.components.FeaturedDocsSection
 import com.example.vaultkey.components.LegitTopBar
 import com.example.vaultkey.components.PipelineStepCard
@@ -102,48 +103,6 @@ fun HomeScreen(
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
-//                    FloatingActionButton(
-//                        onClick = {}
-//                    ) {
-//                        Row(
-//                            modifier = Modifier
-//                                .padding(12.dp),
-//                            verticalAlignment = Alignment.CenterVertically
-//                        ) {
-//                            Icon(
-//                                imageVector = ImageVector.vectorResource(R.drawable.sparkles),
-//                                contentDescription = null
-//                            )
-//                            //Spacer(Modifier.width(10.dp))
-//                            AnimatedVisibility(
-//                                visible = showText,
-//                                enter = fadeIn(
-//                                    animationSpec = tween(
-//                                        durationMillis = 300,
-//                                        easing = FastOutSlowInEasing
-//                                    )
-//                                ) + slideInHorizontally(
-//                                    initialOffsetX = { it / 2 },
-//                                    animationSpec = tween(300, easing = FastOutSlowInEasing)
-//                                ),
-//                                exit = fadeOut(
-//                                    animationSpec = tween(
-//                                        durationMillis = 250,
-//                                        easing = LinearOutSlowInEasing
-//                                    )
-//                                ) + slideOutHorizontally(
-//                                    targetOffsetX = { it / 2 },
-//                                    animationSpec = tween(250, easing = LinearOutSlowInEasing)
-//                                )
-//                            ) {
-//                                Row {
-//                                    Spacer(Modifier.width(10.dp))
-//                                    Text("Chat with AI")
-//                                }
-//                            }
-//                        }
-//                    }
-//                    Spacer(Modifier.height(16.dp))
                     FloatingActionButton(
                         onClick = {
                             navController.navigate("verification")
@@ -156,8 +115,9 @@ fun HomeScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                "Verifications",
-                                fontSize = 16.sp
+                                "Dual-Approval Unmask",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold
                             )
                             Spacer(Modifier.width(12.dp))
                             Icon(
@@ -183,7 +143,7 @@ fun HomeScreen(
                     WelcomeCard(
                         name = appController.profile?.fullName
                             ?: appController.session?.username
-                            ?: "Vaultkey User"
+                            ?: "Field Officer"
                     )
                 }
             }
@@ -196,6 +156,16 @@ fun HomeScreen(
 
             item {
                 AnimatedEntryItem(visible = visible, index = 2) {
+                    ChainIntegrityCard(
+                        onVerifyClick = {
+                            appController.refreshAll()
+                        }
+                    )
+                }
+            }
+
+            item {
+                AnimatedEntryItem(visible = visible, index = 3) {
                     FeaturedDocsSection(
                         documents = appController.documents,
                         onDocClick = { doc ->
@@ -208,27 +178,27 @@ fun HomeScreen(
             }
 
             item {
-                AnimatedEntryItem(visible = visible, index = 3) {
+                AnimatedEntryItem(visible = visible, index = 4) {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        SectionHeader(title = "Verification Pipeline")
+                        SectionHeader(title = "DEDOX Field Suite Status")
                         PipelineStepCard(
-                            title = "Pending Contracts",
+                            title = "Unmask Requests (Dual-Approval)",
                             status = appController.pendingContracts.size.toString(),
-                            timestamp = "Requests waiting for your action",
+                            timestamp = "Active requests awaiting authorization",
                             icon = Icons.Rounded.CheckCircle,
                             containerColor = MaterialTheme.colorScheme.primaryContainer
                         )
                         PipelineStepCard(
-                            title = "Vault Documents",
+                            title = "Encrypted Case Documents",
                             status = appController.documents.size.toString(),
-                            timestamp = "Synced from Legit backend",
+                            timestamp = "FIRs, Forensic Evidence & Charge Sheets",
                             icon = Icons.Rounded.Refresh,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer
                         )
                         PipelineStepCard(
-                            title = "Account Role",
-                            status = appController.session?.role ?: "USER",
-                            timestamp = appController.profile?.email ?: "Backend connected",
+                            title = "Officer Clearance Level",
+                            status = appController.session?.role ?: "OFFICER",
+                            timestamp = appController.profile?.email ?: "DEDOX Backend Connected",
                             icon = Icons.Rounded.Lock,
                             containerColor = MaterialTheme.colorScheme.surfaceVariant
                         )

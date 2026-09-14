@@ -24,13 +24,13 @@ fun LegitTopBar(
         title = {
             Column {
                 Text(
-                    text = "Legit",
+                    text = "DEDOX",
                     style = MaterialTheme.typography.displayMedium,
                     fontWeight = FontWeight.Black
                 )
                 if (collapsedFraction < 0.4f) {
                     Text(
-                        text = "Your Private Verification Pipeline",
+                        text = "Trust & Evidence Layer · Field Suite",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary.copy(alpha = 1f - (collapsedFraction * 2.5f)),
                         fontWeight = FontWeight.Bold

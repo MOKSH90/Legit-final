@@ -101,7 +101,7 @@ fun WelcomeCard(name: String) {
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
                             Text(
-                                text = "ZERO-KNOWLEDGE VAULT",
+                                text = "DEDOX HASH-CHAIN LEDGER",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     letterSpacing = 0.5.sp
                                 ),
