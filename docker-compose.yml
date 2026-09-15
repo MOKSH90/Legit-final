@@ -1,0 +1,57 @@
+services:
+  mongo:
+    image: mongo:8
+    container_name: legit-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - legit-mongo-data:/data/db
+      - legit-mongo-config:/data/configdb
+    environment:
+      - MONGO_INITDB_DATABASE=legit
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./legit-backend
+      dockerfile: Dockerfile
+    container_name: legit-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/legit
+      - MONGODB_DATABASE=legit
+      - JWT_SECRET=legit-super-secret-key-change-this-in-production-minimum-256-bits
+      - LEGIT_ENCRYPTION_SECRET=legit-document-encryption-secret-change-in-production-64chars-min
+      - LEGIT_PIPELINE_SECRET=legit-pipeline-verification-secret-change-in-production
+
+  web:
+    build:
+      context: ./legit-web-new
+      dockerfile: Dockerfile
+    container_name: legit-web-new
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:8080
+      - API_URL=http://backend:8080
+      - NEXT_PUBLIC_API_URL=/api/proxy
+
+volumes:
+  legit-mongo-data:
+    driver: local
+  legit-mongo-config:
+    driver: local
